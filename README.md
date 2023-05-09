@@ -7,13 +7,13 @@
 
 
 ## Overview
-
+i add 4 APIs the two that you requisted from us and two intrseting APIs.
 ## Getting Started
 Do `npm start`.
 
 ## Project Features
-provides home page and favorit page.
+i made four APIs .
 
-### the first question : i learned how to create a Rout using app.get also i learned how to add error funcyion.
+### the first question : i learned how to create a Rout using app.get also i learned how to add error function and i learned how to use external web services.
 
 ### it takes about 2 hour and the expicting time is 3 hours.
