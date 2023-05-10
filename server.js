@@ -129,7 +129,7 @@ function Movie (id, title, release_date, poster_path, overview ){
 
 
 
-//  put the listner inside the connection
+
 
 client.connect().then(() =>{
   app.listen(PORT, () => console.log(`Up and running on port ${PORT}`))
