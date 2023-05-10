@@ -123,7 +123,9 @@ function Movie (id, title, release_date, poster_path, overview ){
 
   Movie.allData = [];
 
+
   
+
 
 
 
