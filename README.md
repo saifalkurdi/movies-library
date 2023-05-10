@@ -3,17 +3,19 @@
 **Author Name**: saif alkurdi
 
 ## WRRC
-![lap13 img](https://user-images.githubusercontent.com/129378351/236335515-135bd31c-fe09-46ac-895e-c01333c60a90.jpg)
+![lap15 img](./lap15.jpg)
 
 
 ## Overview
-
+creating database also sql .
 ## Getting Started
-Do `npm start`.
+do npm start
 
 ## Project Features
-provides home page and favorit page.
+provides add maove and get movie .
 
-### the first question : i learned how to create a Rout using app.get also i learned how to add error funcyion.
+### the first question : 
+i learned how to create a Rout using app.get also i learned how to add error funcyion.
 
-### it takes about 2 hour and the expicting time is 3 hours.
+### the second question :
+it takes about 2 hour and the expicting time is 3 hours.
