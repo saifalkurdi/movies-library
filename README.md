@@ -14,10 +14,10 @@ creating database also sql .
 do npm start
 
 ## Project Features
-provides add maove and get movie .
+provides add movie and get movie .
 
 ### the first question : 
-i learned how to create a Rout using app.get also i learned how to add error funcyion.
+i learned how to create a Rout using app.get also i learned how to add error function.
 
 ### the second question :
-it takes about 2 hour and the expicting time is 3 hours.
+it takes about 2 hour and the expecting time is 3 hours.
