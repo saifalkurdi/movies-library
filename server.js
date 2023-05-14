@@ -13,7 +13,7 @@ const app = express()
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3000;
 
 app.get('/trending', handleRec);
 // app.get('/search', handleSearch);
@@ -86,7 +86,7 @@ app.use(errorHandler);
 function getMovie (req,res) {
   const sql = `select * from movie_data`;
   client.query(sql).then(data =>{
-    res.json(data)
+    res.json(data.rows)
   }).catch(err=>{
     errorHandler(err,req,res);
   })
@@ -101,14 +101,14 @@ function addMovie( req, res){
   const handleValueForUser = [userInput.title, userInput.release_date,userInput.poster_path,userInput.overview];
 
   client.query(sql, handleValueForUser ).then(data => {
-  res.status(201).json(data)
+  res.status(201).json(data.rows[0])
   }).catch(err => errorHandler(err,req,res))
   }
 
 function errorHandler(err ,req ,res){
   res.status(500).json({
     code: 500,
-    messege: err.messege || err
+    message: err.message || err
   })
 }
 
@@ -127,7 +127,7 @@ function Movie (id, title, release_date, poster_path, overview ){
 
 
 
-//  put the listner inside the connection
+//  put the listener inside the connection
 
 client.connect().then(() =>{
   app.listen(PORT, () => console.log(`Up and running on port ${PORT}`))
