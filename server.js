@@ -1,134 +1,116 @@
-'use strict'
-const express = require('express');
-const cors = require('cors');
-const data = require('./Movie Data/data.json');
-const { default: axios } = require('axios');
+"use strict";
+const express = require("express");
+const cors = require("cors");
+const data = require("./Movie Data/data.json");
+const { default: axios } = require("axios");
 
-require ('dotenv').config();
+require("dotenv").config();
 
-const pg = require('pg')
+const pg = require("pg");
 const client = new pg.Client(process.env.DBURL);
 
-const app = express()
+const app = express();
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
 app.get('/trending', handleRec);
-// app.get('/search', handleSearch);
-// app.get('/genres', genres);
-// app.get('/discover', discover);
 app.get('/getMovies', getMovie);
-
-app.post('/getMovies', addMovie );
+app.post('/getMovies', addMovie);
+app.get('/getMovies/:id', getMovieById);
+// http://localhost:PORT/link/id
+app.put('/getMovies/:id', updateMovieById);
+app.delete('/getMovies/:id',deleteMovieById);
 
 app.use(errorHandler);
 
-
-
-
- async function handleRec(req , res){
-  const axiosCallApi = await axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.APIKEY}`)
-  
-  axiosCallApi.data.results.map(item =>
-    new Movie(item.id, item.title, item.release_date, item.poster_path, item.overview)
-    )
- 
-    res.status(200).json({
-      code : 200,
-      movie:Movie.allData
-    })
+async function handleRec(req, res) {
+  const axiosCallApi = await axios.get(
+    `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.APIKEY}`
+  );
+  axiosCallApi.data.results.map((item) =>
+  new Movie(item.id, item.title,item.release_date,item.poster_path,item.overview )
+  );
+  res.status(200).json({
+    code: 200,
+    movie: Movie.allData,
+  });
 }
 
-// function handleSearch(req, res){
-//   const searchQuery = req.query.keyword;
-//   console.log(searchQuery)
-//   axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.APIKEY}&language=en-US&query=${searchQuery}&page=2`).then(
-//     result => {
-//       result.data.results.map(item =>
-//         new Movie(item.id, item.title, item.release_date, item.poster_path, item.overview)
-//         )
-//           res.status(200).json({
-//         code : 200,
-//         movie : Movie.allData
-//       })
-//     }
-//   )
-// }
 
-// function genres (req , res){
-//   axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.APIKEY}&language=en-US`).then(
-//     result =>{
-   
-//         res.status(200).json({
-//           code : 200,
-//           movie : result.data.genres
-//     })
-//   }
-//   )
-// }
-
-// function discover (req , res){
-//   axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`).then(
-//     result => {
-//       result.data.results.map(item =>
-//         new Movie(item.id, item.title, item.release_date, item.poster_path, item.overview)
-//         ).
-//           res.status(200).json({
-//         code : 200,
-//         movie : Movie.allData
-//       })
-//     }
-//   )
-// }
-
-function getMovie (req,res) {
+function getMovie(req, res) {
   const sql = `select * from movie_data`;
-  client.query(sql).then(data =>{
-    res.json(data.rows)
-  }).catch(err=>{
-    errorHandler(err,req,res);
-  })
+  client.query(sql).then((data) => {
+      res.json(data.rows);
+    }).catch((err) => {
+      errorHandler(err, req, res);
+    });
 }
 
-function addMovie( req, res){
+function addMovie(req, res) {
   const userInput = req.body;
-  
-  const sql = `insert into movie_data (title, release_date, poster_path, overview) values
-  ($1, $2, $3, $4) returning *`;
+  const sql = `insert into movie_data (title, release_date, poster_path, overview) values ($1, $2, $3, $4) returning *`;
 
-  const handleValueForUser = [userInput.title, userInput.release_date,userInput.poster_path,userInput.overview];
+  const handleValueForUser = [
+    userInput.title,
+    userInput.release_date,
+    userInput.poster_path,
+    userInput.overview,
+  ];
+  client.query(sql, handleValueForUser).then((data) => {
+      res.status(201).json(data.rows[0]);
+    }).catch((err) => errorHandler(err, req, res));
+}
 
-  client.query(sql, handleValueForUser ).then(data => {
-  res.status(201).json(data.rows[0])
-  }).catch(err => errorHandler(err,req,res))
-  }
+function getMovieById(req, res){
+  const id = req.params.id;
+  const sql = `select * from movie_data where id = ${id}`;
+  client.query(sql).then( data => 
+    res.status(200).json(data)
+  )
+}
 
-function errorHandler(err ,req ,res){
+function updateMovieById (req, res) {
+  const id = req.params.id;
+  const newData = req.body;
+  const sql = `update movie_data set title = $1 , release_date = $2, poster_path = $3, overview = $4 where id = $5 returning *`;
+  const updatedValue = [newData.title, newData.release_date, newData.poster_path, newData.overview, id];
+  client.query(sql, updatedValue).then(data =>
+    res.status(202).json(data.rows)
+     )
+}
+
+function deleteMovieById(req, res){
+  const id = req.params.id;
+  const sql = `delete from movie_data where id = ${id}`;
+  client.query(sql).then(data => 
+    res.status(204).json({
+      code: 204,
+      message: `row deleted successfully with id : ${id}`
+    })
+    ).catch(err => errorHandler(err ,req ,res));
+}
+
+function errorHandler(err, req, res) {
   res.status(500).json({
     code: 500,
-    message: err.message || err
-  })
+    message: err.message || err,
+  });
 }
 
-function Movie (id, title, release_date, poster_path, overview ){
+function Movie(id, title, release_date, poster_path, overview) {
   this.id = id;
   this.title = title;
   this.release_date = release_date;
   this.poster_path = poster_path;
   this.overview = overview;
   Movie.allData.push(this);
-  }
+}
 
-  Movie.allData = [];
-
-  
+Movie.allData = [];
 
 
-
-//  put the listener inside the connection
-
-client.connect().then(() =>{
-  app.listen(PORT, () => console.log(`Up and running on port ${PORT}`))
-})
+client.connect().then(() => {
+  app.listen(PORT, () => console.log(`Up and running on port ${PORT}`));
+}).catch(err => console.log(err));

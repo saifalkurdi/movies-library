@@ -1,5 +1,3 @@
-# i do a resubmit just to make sure the server is work
-
 # Project Name - Project Version
 
 **Author Name**: saif alkurdi
@@ -20,4 +18,4 @@ provides add movie and get movie .
 i learned how to create a Rout using app.get also i learned how to add error function.
 
 ### the second question :
-it takes about 2 hour and the expecting time is 3 hours.
+it takes about 3 hour and the expecting time is 3 hours.
