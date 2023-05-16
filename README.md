@@ -13,6 +13,6 @@ Add an image of your WRRC here
 ## Project Features
 <!-- What are the features included in you app -->
 
-### the first question : i learned how to create a Rout using app.get also i learned how to add error funcyion.
+### the first question : i learned how to create a Rout using app.get also i learned how to add error function.
 
-### it takes about 2 hour and the expicting time is 3hours.
+### it takes about 2 hour and the expecting time is 3hours.
