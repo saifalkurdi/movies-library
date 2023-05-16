@@ -1,17 +1,20 @@
 # Project Name - Project Version
 
-**Author Name**: Add your name here
-
-## WRRC
-Add an image of your WRRC here
+**Author Name**: saif alkurdi
 
 ## Overview
-
+creating database also sql .
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+do npm start
 
 ## Project Features
-<!-- What are the features included in you app -->
+make a deploy for the database using `render.com`
+
+## Getting Started
+npm start
+
+## Project Features
+movies
 
 ### the first question : i learned how to create a Rout using app.get also i learned how to add error function.
 
