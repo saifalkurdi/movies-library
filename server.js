@@ -15,7 +15,8 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 app.get('/', (req , res )=> {
-  res.send('hello world')
+  const movie = new Movie(data.id, data.title, data.release_date, data.poster_path, data.overview,)
+  res.send(movie)
 })
 app.get('/trending', handleRec);
 app.get('/getMovies', getMovie);
