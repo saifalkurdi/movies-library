@@ -14,7 +14,9 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-
+app.get('/', (req , res )=> {
+  res.send('hello world')
+})
 app.get('/trending', handleRec);
 app.get('/getMovies', getMovie);
 app.post('/getMovies', addMovie);
