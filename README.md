@@ -10,8 +10,12 @@ do npm start
 ## Project Features
 make a deploy for the database using `render.com`
 
-### the first question : 
-i learned how to make a deploy for the database.
+## Getting Started
+npm start
 
-### the second question :
-it takes about 1 hour and the expecting time is 2 hours.
+## Project Features
+movies
+
+### the first question : i learned how to create a Rout using app.get also i learned how to add error function.
+
+### it takes about 2 hour and the expecting time is 3hours.
