@@ -27,8 +27,8 @@ app.use(errorHandler);
 
 async function handleRec(req, res) {
   const axiosCallApi = await axios.get(
-    `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.APIKEY}`
-  );
+    `${process.env.URL}?api_key=${process.env.APIKEY}`);
+    Movie.allData = [];
   axiosCallApi.data.results.map((item) =>
   new Movie(item.id, item.title,item.release_date,item.poster_path,item.overview )
   );
@@ -64,10 +64,11 @@ function addMovie(req, res) {
 }
 
 function getMovieById(req, res){
+  Movie.allData = [];
   const id = req.params.id;
   const sql = `select * from movie_data where id = ${id}`;
   client.query(sql).then( data => 
-    res.status(200).json(data)
+    res.status(200).json(data.rows)
   )
 }
 
@@ -112,5 +113,5 @@ Movie.allData = [];
 
 
 client.connect().then(() => {
-  app.listen(PORT, () => console.log(`Up and running on port ${PORT}`));
+  app.listen(PORT, () => console.log(`listening to port ${PORT}`));
 }).catch(err => console.log(err));
