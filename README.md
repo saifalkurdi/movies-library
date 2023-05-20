@@ -1,6 +1,6 @@
 # Project Name - Project Version
 
-**Author Name**: saif alkurdi
+**Author Name**: saif alkurdi.
 
 ## Overview
 creating database also sql .
