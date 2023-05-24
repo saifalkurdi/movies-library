@@ -79,10 +79,9 @@ function addMovie(req, res) {
     userInput.overview,
     userInput.comments,
   ];
-  client
-    .query(sql, handleValueForUser)
+  client.query(sql, handleValueForUser)
     .then((data) => {
-      res.status(201).json(data.rows[0]);
+      res.status(201).json(data.rows);
     })
     .catch((err) => errorHandler(err, req, res));
 }
